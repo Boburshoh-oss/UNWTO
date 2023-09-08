@@ -21,11 +21,14 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
+    
     # Pages
     # path('user/', include('apps.chat.pages.urls')),
 
     # API's
     # path('api/chat/', include('apps.chat.api.urls')),
+    
+#Forum Page
+    path('forum/', include('apps.forum.urls')),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
