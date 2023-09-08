@@ -21,7 +21,7 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
+    
     # Pages
     # path('user/', include('apps.chat.pages.urls')),
 

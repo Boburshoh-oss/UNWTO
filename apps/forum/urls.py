@@ -24,5 +24,9 @@ urlpatterns = [
     # EventTime APIs
     path('event-time/', views.EventTimeApiView.as_view(), name="event-time"),
     path('event-time/<int:pk>/', views.EventTimeDetailApiView.as_view(), name="event-time-detail"),
+    
+    path('forums/', views.ForumListCreateView.as_view(), name='forum-list'),
+    path('projects/', views.ForumProjectListCreateView.as_view(), name='project-list'),
 
 ]
+
