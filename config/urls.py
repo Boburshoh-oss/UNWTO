@@ -27,5 +27,6 @@ urlpatterns = [
 
     # API's
     # path('api/chat/', include('apps.chat.api.urls')),
+    path('api/forum/', include('apps.forum.urls')),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
