@@ -39,6 +39,8 @@ ALLOWED_HOSTS = [get_env_value('ALLOWED_HOSTS')]
 
 # Application definition
 LOCAL_APPS = [
+    'apps.form.apps.FormConfig',
+
 ]
 
 INSTALLED_APPS = [
