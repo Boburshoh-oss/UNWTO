@@ -3,8 +3,7 @@ from . import views
 
 urlpatterns = [
     # Organization APIs
-    path('invitation/create', views.InivitationApiView.as_view(), name="invitation"),
-    path('invitaion/', views.InvitationApiView.as_view(), name="invitation-list"),
+    path('invitation/', views.InivitationApiView.as_view(), name="invitation"),
     path('invitation/<int:pk>/', views.InivitationRetrieveUpdateDestroyAPIView.as_view(), name="invitation-detail"),
 
     # Forum APIs

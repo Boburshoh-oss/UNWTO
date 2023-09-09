@@ -21,23 +21,19 @@ class PaginationReport(PageNumberPagination):
 class InivitationApiView(APIView):
     serializer_class = InivitationSerializer
     pagination_class = PaginationReport
+
     def get(self, request):
         invitation = Inivitation.objects.all()
         serializer = InivitationSerializer(instance=invitation, many=True)
         return Response(serializer.data)
+
     def post(self, request):
         serializer = InivitationSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            inputted_code = request.data.get('code')  # Get the inputted code
+            return Response({'code': inputted_code}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-class InvitationApiView(MyListAPIView):
-    queryset = Inivitation.objects.all()
-    serializer_class = InivitationSerializer
-    pagination_class = PaginationReport
-
 
 
 class InivitationRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):

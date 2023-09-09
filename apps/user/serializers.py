@@ -24,21 +24,19 @@ class UserSerializer(serializers.ModelSerializer):
     forum_type = serializers.PrimaryKeyRelatedField(
         many=True, queryset=Forum.objects.all()
     )
-
+    invitation_title = serializers.CharField(source='invitation_id.code', read_only=True)
     def create(self, validated_data):
         invitation_id = models.Inivitation.objects.filter(
             code=validated_data['invitation_id']
         ).first()
-        print(invitation_id)
         if invitation_id and invitation_id.active:
-            print(invitation_id.active)
+            keys = ''
             for f in validated_data['forum_type']:
-                validated_data['access_id'] += f.short_key + " "
-            validated_data['access_id'] += invitation_id.code
+                keys+=f.short_key + " "
+            validated_data['access_id'] =keys+validated_data['access_id']
             invitation_id.active = False
             invitation_id.save()
-            
-            # Create and return the user instance
+            print(validated_data['access_id'])
             user = super().create(validated_data)
             return user
         else:
