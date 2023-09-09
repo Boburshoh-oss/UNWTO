@@ -1,5 +1,6 @@
 from django.contrib import admin
-
+from django.urls import path
+from django.http import HttpResponseRedirect
 from .models import *
 
 
@@ -10,7 +11,9 @@ class InivitationAdmin(admin.ModelAdmin):
     search_fields = ("code", )
 
 
+
 class UserAdmin(admin.ModelAdmin):
+    change_list_template = "entities/excel_button.html"
     list_display = (
         "first_name",
         "last_name",
@@ -20,6 +23,7 @@ class UserAdmin(admin.ModelAdmin):
         "organization",
         "access_id",
         "invitation_id",
+
     )
     list_filter = ("created", "modified")
     search_fields = (
@@ -30,7 +34,18 @@ class UserAdmin(admin.ModelAdmin):
         "access_id",
         "invitation_id",
     )
-
+    def get_urls(self):
+        urls = super().get_urls()
+        my_urls = [
+            path('mortal/', self.set_download),
+        ]
+        return my_urls + urls
+    
+    def set_download(self, request):
+        # self.model.objects.all()
+        self.message_user(request, "dowloaded users")
+        return HttpResponseRedirect("../")
 
 admin.site.register(Inivitation, InivitationAdmin)
 admin.site.register(User, UserAdmin)
+
