@@ -1,10 +1,11 @@
 from django.contrib import admin
-
+from import_export.admin import ExportActionModelAdmin
 from .models import *
 
 
 # Forum admin
-class ForumAdmin(admin.ModelAdmin):
+class ForumAdmin(ExportActionModelAdmin,admin.ModelAdmin):
+    # actions = [export_to_excel]
     list_display = ('title', 'description', 'created', 'modified')
     list_filter = ('created', 'modified')
     search_fields = ('title', 'description', 'organization__title')
