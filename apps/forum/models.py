@@ -13,7 +13,13 @@ class Organization(TimeStampedModel, models.Model):
 
 
 class Forum(TimeStampedModel, models.Model):
+    CHOICES =(
+    ("GA", "General Assambly"),
+    ("IF", "Investment Forum"),
+    ("EF", "Educational Forum"),
+)
     title = models.CharField(max_length=255, blank=True)
+    short_key=models.CharField(choices=CHOICES, default="GA") 
     organization = models.ManyToManyField(Organization)
     description = models.TextField()
 
