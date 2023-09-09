@@ -8,14 +8,15 @@ class OrganizationSerializer(ModelSerializer):
         model = models.Organization
         fields = "__all__"
 
-
-class ForumSerializer(serializers.ModelSerializer):
-    organization_title = serializers.CharField(source="organization.title", read_only=True)
-    organization_id = serializers.IntegerField(source="organization.id", read_only=True)
-
+class ForumdetailSerializer(ModelSerializer):
     class Meta:
         model = models.Forum
         fields = "__all__"
+
+class ForumSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Forum
+        fields = ("id", "created", "modified", "title", "description")
 
 
 class ForumProjectSerializer(ModelSerializer):
