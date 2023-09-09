@@ -38,7 +38,7 @@ SECRET_KEY = get_env_value("SECRET_KEY")
 # DEBUG = True
 
 ALLOWED_HOSTS = [get_env_value("ALLOWED_HOSTS")]
-
+CSRF_TRUSTED_ORIGINS = ['https://088a-213-230-76-69.ngrok-free.app']
 
 # Application definition
 LOCAL_APPS = ["apps.user", "apps.forum", "apps.blog"]

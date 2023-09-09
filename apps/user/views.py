@@ -20,11 +20,14 @@ class PaginationReport(PageNumberPagination):
 
 class InivitationApiView(APIView):
     serializer_class = InivitationSerializer
+    pagination_class = PaginationReport
 
     def get(self, request):
+        paginator = self.pagination_class()
         invitations = Inivitation.objects.all()
-        serializer = InivitationSerializer(instance=invitations, many=True)
-        return Response(serializer.data)
+        result_page = paginator.paginate_queryset(invitations, request)
+        serializer = InivitationSerializer(instance=result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)
 
     def post(self, request):
         serializer = InivitationSerializer(data=request.data)
