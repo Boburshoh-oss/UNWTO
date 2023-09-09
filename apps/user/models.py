@@ -10,7 +10,7 @@ class Inivitation(TimeStampedModel, models.Model):
     code = models.IntegerField(unique=True)
     active = models.BooleanField(default=True)
 
-    def __str__(self) -> str:
+    def __int__(self) -> int:
         return self.code
 
 
