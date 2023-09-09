@@ -1,10 +1,11 @@
 from django.contrib import admin
-
+from modeltranslation.admin import TranslationAdmin
 from .models import *
 
 
 # Forum admin
-class ForumAdmin(admin.ModelAdmin):
+@admin.register(Forum)
+class ForumAdmin(TranslationAdmin):
     list_display = ('title', 'description', 'created', 'modified')
     list_filter = ('created', 'modified')
     search_fields = ('title', 'description', 'organization__title')
@@ -32,7 +33,7 @@ class EventTimeAdmin(admin.ModelAdmin):
     search_fields = ('start_time', 'end_time', 'description')
 
 
-admin.site.register(Forum, ForumAdmin)
+# admin.site.register(Forum, ForumAdmin)
 admin.site.register(Organization, OrganizationAdmin)
 admin.site.register(ForumProject, ForumProjectAdmin)
 admin.site.register(Event, EventAdmin)
