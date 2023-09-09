@@ -20,6 +20,13 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
+      
+# Visual database for Postgres SQL
+  adminer:
+    image: adminer
+#    restart: always
+    ports:
+      - '7002:8080'
 
 volumes:
   postgres_data:
