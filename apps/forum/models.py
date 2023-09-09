@@ -40,7 +40,6 @@ class Event(TimeStampedModel, models.Model):
     def __str__(self) -> str:
         return self.day
 
-
 class EventTime(models.Model):
     start_time = models.TimeField()
     end_time = models.TimeField()
