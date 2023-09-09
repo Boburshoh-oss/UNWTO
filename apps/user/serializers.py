@@ -29,14 +29,21 @@ class UserSerializer(serializers.ModelSerializer):
         invitation_id = models.Inivitation.objects.filter(
             code=validated_data['invitation_id']
         ).first()
-        print(validated_data)
+        print(invitation_id)
         if invitation_id and invitation_id.active:
-            invitation_id.active=False
+            print(invitation_id.active)
+            for f in validated_data['forum_type']:
+                validated_data['access_id'] += f.short_key + " "
+            validated_data['access_id'] += invitation_id.code
+            invitation_id.active = False
             invitation_id.save()
-            return super().create(validated_data)
+            
+            # Create and return the user instance
+            user = super().create(validated_data)
+            return user
         else:
-            return Response(
-                {"error": "User with this access id already exists."}, status=status.HTTP_400_BAD_REQUEST
+            raise serializers.ValidationError(
+                {"error": "User with this access id already exists."}
             )
     class Meta:
         model = models.User
