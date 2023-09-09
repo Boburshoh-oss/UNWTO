@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
+import csv
 from .models import *
 
 
@@ -23,7 +24,6 @@ class UserAdmin(admin.ModelAdmin):
         "organization",
         "access_id",
         "invitation_id",
-
     )
     list_filter = ("created", "modified")
     search_fields = (
@@ -34,17 +34,27 @@ class UserAdmin(admin.ModelAdmin):
         "access_id",
         "invitation_id",
     )
+
     def get_urls(self):
         urls = super().get_urls()
         my_urls = [
-            path('mortal/', self.set_download),
+            path('export_csv/', self.export_csv),
         ]
         return my_urls + urls
-    
-    def set_download(self, request):
-        # self.model.objects.all()
-        self.message_user(request, "dowloaded users")
-        return HttpResponseRedirect("../")
+
+    def export_csv(self, request):
+        meta = self.model._meta
+        field_names = [field.name for field in meta.fields]
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+        writer = csv.writer(response)
+
+        writer.writerow(field_names)
+        for obj in self.model.objects.all():
+            row = writer.writerow([getattr(obj, field) for field in field_names])
+
+        return response
 
 admin.site.register(Inivitation, InivitationAdmin)
 admin.site.register(User, UserAdmin)
