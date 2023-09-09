@@ -22,7 +22,7 @@ urlpatterns = [
     path('event/<int:pk>/', views.EventDetailApiView.as_view(), name="event-detail"),
 
     # EventTime APIs
-    path('event-time/', views.EventTimeApiView.as_view(), name="event-time"),
+    path('event-times/', views.EventTimeApiView.as_view(), name="event-time"),
     path('event-time/<int:pk>/', views.EventTimeDetailApiView.as_view(), name="event-time-detail"),
 
 ]
