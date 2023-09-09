@@ -15,7 +15,6 @@ class PaginationReport(PageNumberPagination):
 # Organizations Apis
 class OrganizationApiView(MyListAPIView):
     def get_queryset(self):
-        limit = int(self.request.GET.get("limit", 10))
         queryset = models.Organization.objects.all()
         return queryset
     serializer_class = serializers.OrganizationSerializer
