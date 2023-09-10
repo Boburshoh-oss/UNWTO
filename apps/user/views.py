@@ -1,4 +1,3 @@
-from django.db.models import F
 from rest_framework.pagination import PageNumberPagination
 from apps.forum.utils.list_api_view import MyListAPIView
 from rest_framework.views import APIView
@@ -10,9 +9,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from .models import Inivitation, User
 from .serializers import UserSerializer, InivitationSerializer
-import random
 from django.shortcuts import get_object_or_404
-
+from .utils import create_invitaion
 
 class PaginationReport(PageNumberPagination):
     page_size = 10
@@ -30,32 +28,29 @@ class InivitationApiView(APIView):
         result_page = paginator.paginate_queryset(invitations, request)
         serializer = InivitationSerializer(instance=result_page, many=True)
         return paginator.get_paginated_response(serializer.data)
-    def generate_invitations(self, quantity):
-        generated_invitations = []
-        for _ in range(quantity):
-            while True:
-                random_code = random.randint(100000, 9999999)
-                if not Inivitation.objects.filter(code=random_code).exists():
-                    break
-            invitation = Inivitation(code=random_code)
-            invitation.save()
-            generated_invitations.append(invitation)
-        return generated_invitations
-
+    
     def post(self, request):
-        quantity = request.data.get("quantity")
-        if quantity is not None:
-            generated_invitations = self.generate_invitations(quantity)
-            serializer = InivitationSerializer(
-                instance=generated_invitations, many=True
-            )
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(
-                {"quantity": "Quantity is required."},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+        try:
+            num_of_invs = int(request.data["quantity"])
+        except (KeyError, TypeError, ValueError):
+            return Response({"error": "Invalid input"})
 
+        if num_of_invs <= 0 or num_of_invs > 10000:
+            return Response({"error": "Number of invitations must be between 1 and 10,000"})
+
+        invitations = create_invitaion(num_of_invs)
+
+        if invitations:
+            serializer = InivitationSerializer(invitations, many=True)
+            return Response(
+                {
+                    "success": f"{num_of_invs} invitations created",
+                    "codes": serializer.data,
+                }
+            )
+        else:
+            return Response({"error": "Invitations creation failed"})
+    
 
 class InvitationCheckApiView(APIView):
     serializer_class = InivitationSerializer
