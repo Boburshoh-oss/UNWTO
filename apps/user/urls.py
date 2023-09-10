@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     # Organization APIs
     path('invitation/', views.InivitationApiView.as_view(), name="invitation"),
+    path('invitation/check/', views.InvitationCheckApiView.as_view(), name="invitation-check"),
     path('invitation/<int:pk>/', views.InivitationRetrieveUpdateDestroyAPIView.as_view(), name="invitation-detail"),
 
     # Forum APIs
