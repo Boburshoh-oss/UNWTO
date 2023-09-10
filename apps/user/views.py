@@ -12,6 +12,7 @@ from .serializers import UserSerializer, InivitationSerializer
 from django.shortcuts import get_object_or_404
 from .utils import create_invitaion
 
+
 class PaginationReport(PageNumberPagination):
     page_size = 10
     page_size_query_param = "page_size"
@@ -24,11 +25,11 @@ class InivitationApiView(APIView):
 
     def get(self, request):
         paginator = self.pagination_class()
-        invitations = Inivitation.objects.all()
+        invitations = Inivitation.objects.all().order_by("-pk")
         result_page = paginator.paginate_queryset(invitations, request)
         serializer = InivitationSerializer(instance=result_page, many=True)
         return paginator.get_paginated_response(serializer.data)
-    
+
     def post(self, request):
         try:
             num_of_invs = int(request.data["quantity"])
@@ -36,7 +37,9 @@ class InivitationApiView(APIView):
             return Response({"error": "Invalid input"})
 
         if num_of_invs <= 0 or num_of_invs > 10000:
-            return Response({"error": "Number of invitations must be between 1 and 10,000"})
+            return Response(
+                {"error": "Number of invitations must be between 1 and 10,000"}
+            )
 
         invitations = create_invitaion(num_of_invs)
 
@@ -50,7 +53,7 @@ class InivitationApiView(APIView):
             )
         else:
             return Response({"error": "Invitations creation failed"})
-    
+
 
 class InvitationCheckApiView(APIView):
     serializer_class = InivitationSerializer
@@ -58,22 +61,24 @@ class InvitationCheckApiView(APIView):
 
     def get(self, request):
         paginator = self.pagination_class()
-        invitations = Inivitation.objects.all()
+        invitations = Inivitation.objects.all().order_by("-pk")
         result_page = paginator.paginate_queryset(invitations, request)
         serializer = InivitationSerializer(instance=result_page, many=True)
         return paginator.get_paginated_response(serializer.data)
 
     def post(self, request):
-        inputted_code = request.data.get('code')
+        inputted_code = request.data.get("code")
         if inputted_code is not None:
             invitation = get_object_or_404(Inivitation, code=inputted_code)
             if invitation.active:
                 serializer = InivitationSerializer(instance=invitation)
                 return Response(serializer.data, status=status.HTTP_200_OK)
-            return Response({'code': 'Code already used.'}, status=status.HTTP_400_BAD_REQUEST)
-        return Response({'code': 'Code is required.'}, status=status.HTTP_400_BAD_REQUEST)
-
-
+            return Response(
+                {"code": "Code already used."}, status=status.HTTP_400_BAD_REQUEST
+            )
+        return Response(
+            {"code": "Code is required."}, status=status.HTTP_400_BAD_REQUEST
+        )
 
 class InivitationRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Inivitation.objects.all()
@@ -84,9 +89,8 @@ class UserApiView(MyListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-
 class UserCreateApiView(ListCreateAPIView):
-    queryset = User.objects.all()
+    queryset = User.objects.all().order_by("-pk")
     serializer_class = UserSerializer
     pagination_class = PaginationReport
 
