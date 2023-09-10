@@ -28,7 +28,7 @@ schema_view = get_schema_view(
         title="Snippets API",
         default_version='v1',
         description="UNWTO backend swagger",
-        terms_of_service="https://bizda-bor.uz",
+        terms_of_service="https://example.com/terms/",
         contact=openapi.Contact(email="test@gmail.com"),
         license=openapi.License(name="MIT License"),
     ),
