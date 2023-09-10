@@ -55,7 +55,7 @@ INSTALLED_APPS = [
 
     "django_filters",
     'drf_yasg',
-    "corsheaders",
+    'corsheaders',
     'import_export',
 
     
@@ -72,7 +72,21 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:8080",
+#     "http://localhost:8000",
+#     "http://127.0.0.1:8080"
+# ]
+# CORS ORIGIN
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOW_CREDENTIALS = True
+
 
 ROOT_URLCONF = "config.urls"
 
