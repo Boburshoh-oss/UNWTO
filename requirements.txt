@@ -11,3 +11,6 @@ Pillow
 typing_extensions
 utils
 django-import-export
+drf-yasg
+
+
