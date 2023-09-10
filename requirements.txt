@@ -10,4 +10,4 @@ django-model-utils
 Pillow
 typing_extensions
 utils
-import_export
+django-import-export
