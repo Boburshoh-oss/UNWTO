@@ -39,7 +39,7 @@ SECRET_KEY = get_env_value("SECRET_KEY")
 
 ALLOWED_HOSTS = [get_env_value("ALLOWED_HOSTS")]
 CSRF_TRUSTED_ORIGINS = ['https://088a-213-230-76-69.ngrok-free.app']
-
+CORS_ORIGIN_ALLOW_ALL = False
 # Application definition
 LOCAL_APPS = ["apps.user", "apps.forum", "apps.blog"]
 
@@ -55,7 +55,7 @@ INSTALLED_APPS = [
 
     "django_filters",
     'drf_yasg',
-
+    "corsheaders",
     'import_export',
 
     
@@ -65,6 +65,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
