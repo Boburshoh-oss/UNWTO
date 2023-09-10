@@ -1,10 +1,6 @@
 from django.contrib import admin
-from django.urls import path
-from django.http import HttpResponseRedirect, HttpResponse
-import csv
-from import_export import fields, resources
-from import_export.widgets import ForeignKeyWidget
-from import_export.admin import ExportActionMixin, ImportExportModelAdmin
+from django_admin_multi_select_filter.filters import MultiSelectFieldListFilter
+from import_export.admin import ExportActionMixin
 from .models import *
 from .resources import UserResource
 
@@ -26,11 +22,12 @@ class UserAdmin(ExportActionMixin,admin.ModelAdmin):
         "date_of_birth",
         "country",
         "expire_date",
+
         "organization",
         "access_id",
         "invitation_id",
     )
-    list_filter = ("created", "modified")
+    list_filter = ("created", "modified","organization",("forum_type__title",MultiSelectFieldListFilter),("organization__title",MultiSelectFieldListFilter))
     search_fields = (
         "first_name",
         "last_name",

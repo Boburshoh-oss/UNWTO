@@ -12,5 +12,5 @@ typing_extensions
 utils
 django-import-export
 drf-yasg
-
+django-admin-multi-select-filter
 
