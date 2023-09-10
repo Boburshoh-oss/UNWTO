@@ -1,34 +1,35 @@
 from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin
+from import_export.admin import ExportActionMixin
 from .models import *
 
 
 # Forum admin
 @admin.register(Forum)
-class ForumAdmin(TranslationAdmin):
+class ForumAdmin(ExportActionMixin,TranslationAdmin):
     list_display = ('title', 'description', 'created', 'modified')
     list_filter = ('created', 'modified')
     search_fields = ('title', 'description', 'organization__title')
 
-class OrganizationAdmin(admin.ModelAdmin):
+class OrganizationAdmin(ExportActionMixin,admin.ModelAdmin):
     list_display = ('title', 'created', 'modified')
     list_filter = ('created', 'modified')
     search_fields = ('title',)
 
 
-class ForumProjectAdmin(admin.ModelAdmin):
+class ForumProjectAdmin(ExportActionMixin,admin.ModelAdmin):
     list_display = ('title', 'subtitle', 'context', 'created', 'modified')
     list_filter = ('created', 'modified')
     search_fields = ('title', 'subtitle', 'context')
 
 
-class EventAdmin(admin.ModelAdmin):
+class EventAdmin(ExportActionMixin,admin.ModelAdmin):
     list_display = ('day', 'date', 'created', 'modified')
     list_filter = ('created', 'modified')
     search_fields = ('day', 'date')
 
 
-class EventTimeAdmin(admin.ModelAdmin):
+class EventTimeAdmin(ExportActionMixin,admin.ModelAdmin):
     list_display = ('start_time', 'end_time', 'description')
     search_fields = ('start_time', 'end_time', 'description')
 
