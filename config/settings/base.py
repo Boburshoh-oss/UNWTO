@@ -74,7 +74,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
-CSRF_TRUSTED_ORIGINS = ['http://0.0.0.0:8000/', "http://disgusted-pizzas.surge.sh", "https://disgusted-pizzas.surge.sh"]  #ngrok temporary url
+CSRF_TRUSTED_ORIGINS = ['http://0.0.0.0:8000/', "http://disgusted-pizzas.surge.sh", "https://disgusted-pizzas.surge.sh", "https://4b12-195-158-3-178.ngrok-free.app"]  #ngrok temporary url
 # CORS_ALLOWED_ORIGINS = [
 #     "http://localhost:8080",
 #     "http://localhost:8000",
