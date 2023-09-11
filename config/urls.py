@@ -47,6 +47,7 @@ urlpatterns = [
     # path('api/chat/', include('apps.chat.api.urls')),
     path('api/forum/', include('apps.forum.urls')),
     path('api/user/', include('apps.user.urls')),
+    path('api/banner/', include('apps.blog.urls')),
 
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
