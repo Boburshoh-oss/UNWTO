@@ -11,7 +11,7 @@ class EventTabularInline(admin.TabularInline):
 
 @admin.register(Forum)
 class ForumAdmin(ExportActionMixin, TranslationAdmin):
-    list_display = ("title", "description", "created", "modified")
+    list_display = ("title","short_key", "description", "created", "modified")
     list_filter = ("created", "modified")
     search_fields = ("title", "description", "organization__title")
     inlines = [EventTabularInline]
