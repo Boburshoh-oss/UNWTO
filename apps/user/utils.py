@@ -36,5 +36,5 @@ def send_email(first_name,last_name, email, access_id):
     
     with smtplib.SMTP("smtp.gmail.com", port=587) as connection:
         connection.starttls()
-        connection.login(OWN_EMAIL, OWN_PASSWORD)
-        con = connection.sendmail(from_addr=OWN_EMAIL, to_addrs=email, msg=email_message)
+        connection.login('unwtoforum2023@gmail.com', 'lzlpfadqzlpwmqpt')
+        con = connection.sendmail(from_addr='unwtoforum2023@gmail.com', to_addrs=email, msg=email_message)
