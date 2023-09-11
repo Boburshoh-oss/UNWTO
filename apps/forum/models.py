@@ -19,7 +19,7 @@ class Forum(TimeStampedModel, models.Model):
     ("EF", "Educational Forum"),
 )   
     title = models.CharField(max_length=255, blank=True)
-    short_key=models.CharField(choices=CHOICES, default="GA") 
+    short_key=models.CharField(choices=CHOICES, default="GA",max_length=255,) 
     organization = models.ManyToManyField(Organization)
     description = models.TextField()
 
