@@ -7,10 +7,10 @@ from apps.forum.models import Forum, Organization
 
 # # Create your models here.
 class Inivitation(TimeStampedModel, models.Model):
-    code = models.IntegerField(unique=True)
+    code = models.CharField(unique=True)
     active = models.BooleanField(default=True)
 
-    def __int__(self) -> int:
+    def __str__(self) -> str:
         return self.code
 
 

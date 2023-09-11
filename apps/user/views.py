@@ -69,7 +69,7 @@ class InvitationCheckApiView(APIView):
     def post(self, request):
         inputted_code = request.data.get("code")
         if inputted_code is not None:
-            invitation = get_object_or_404(Inivitation, code=inputted_code)
+            invitation = get_object_or_404(Inivitation, code=str(inputted_code))
             if invitation.active:
                 serializer = InivitationSerializer(instance=invitation)
                 return Response(serializer.data, status=status.HTTP_200_OK)
