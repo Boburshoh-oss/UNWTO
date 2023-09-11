@@ -41,20 +41,14 @@ class UserSerializer(serializers.ModelSerializer):
             # invitation_id.active = False
             # invitation_id.save()
 
-            email_sent=send_email(
+            send_email(
                 email=validated_data["email"],
                 first_name=validated_data["first_name"],
                 last_name=validated_data["last_name"],
                 access_id=validated_data["access_id"],
             )
-            
-            if not email_sent:
-                user = super().create(validated_data)
-                return user
-            else:
-                return Response(
-                    {"error": "Invalid email address"}, status=status.HTTP_400_BAD_REQUEST
-                )
+            user = super().create(validated_data)
+            return user
         else:
             raise serializers.ValidationError(
                 {"error": "User with this access id already exists."}
