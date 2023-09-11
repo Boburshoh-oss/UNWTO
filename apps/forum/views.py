@@ -60,8 +60,8 @@ class ForumApiView(APIView):
                 times = []
                 for event_time in forum_day_times:
                     times.append({
-                        'start_time' : event_time.start_time,
-                        'end_time' : event_time.end_time,
+                        'start_time' : event_time.start_time.strftime("%H:%M"),
+                        'end_time' : event_time.end_time.strftime("%H:%M"),
                         'description_uz' : event_time.description_uz,
                         'description_ru' : event_time.description_ru,
                         'description_en' : event_time.description_en
