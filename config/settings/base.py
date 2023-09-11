@@ -75,16 +75,14 @@ MIDDLEWARE = [
 ]
 
 CSRF_TRUSTED_ORIGINS = ['http://0.0.0.0:8000/', "http://disgusted-pizzas.surge.sh", "https://disgusted-pizzas.surge.sh", "https://4b12-195-158-3-178.ngrok-free.app"]  #ngrok temporary url
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:8080",
-#     "http://localhost:8000",
-#     "http://127.0.0.1:8080"
-# ]
+CORS_ALLOW_ALL_ORIGINS = True
 # CORS ORIGIN
 
-CORS_ALLOW_ALL_ORIGINS = True
+
 
 CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_HEADERS = "*"
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 ROOT_URLCONF = "config.urls"
