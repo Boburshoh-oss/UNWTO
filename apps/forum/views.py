@@ -28,7 +28,7 @@ class ForumApiView(APIView):
     pagination_class = PaginationReport
 
     def get(self, request):
-        queryset = models.Forum.objects.all()
+        queryset = models.Forum.objects.all().order_by('-pk')
         queryset = queryset.annotate(
             forum_title=F('title')
         )
@@ -103,7 +103,7 @@ class ForumDetailApiView(APIView):
 
 # ForumProject Apis
 class ForumProjectListApiView(MyListAPIView):
-    queryset = models.ForumProject.objects.all()
+    queryset = models.ForumProject.objects.all().order_by('-pk')
 
     def get_queryset(self):
         queryset = super().get_queryset()
