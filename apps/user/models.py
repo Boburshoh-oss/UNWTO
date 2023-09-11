@@ -20,6 +20,7 @@ class User(TimeStampedModel, models.Model):
     last_name = models.CharField(max_length=255)
     date_of_birth = models.DateField()
     country = CountryField()
+    email = models.EmailField(max_length=255)
     passport = models.CharField(max_length=20)
     expire_date = models.DateField()
     image = models.ImageField(upload_to="media/profile/")
