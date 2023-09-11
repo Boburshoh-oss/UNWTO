@@ -40,7 +40,7 @@ class UserSerializer(serializers.ModelSerializer):
             validated_data["access_id"] = keys + str(get_uid())
             # invitation_id.active = False
             # invitation_id.save()
-
+            print(validated_data, 'dfsdfsdfsdfsdf')
             send_email(
                 email=validated_data["email"],
                 first_name=validated_data["first_name"],
