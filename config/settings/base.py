@@ -167,7 +167,6 @@ LOCALE_PATHS = [
 ]
 
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
-
 MODELTRANSLATION_LANGUAGES = ('uz', 'en', 'ru')
 
 # Static files (CSS, JavaScript, Images)
