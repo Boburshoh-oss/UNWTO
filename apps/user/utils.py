@@ -38,4 +38,3 @@ def send_email(first_name,last_name, email, access_id):
         connection.starttls()
         connection.login(OWN_EMAIL, OWN_PASSWORD)
         con = connection.sendmail(from_addr=OWN_EMAIL, to_addrs=email, msg=email_message)
-        print(con, '*'*20)
