@@ -16,17 +16,18 @@ class ForumdetailSerializer(ModelSerializer):
 class ForumSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Forum
-        fields = ("id", "created", "modified", "title", "description")
+        fields = ("id", "created", "modified")
 
 
 class ForumProjectSerializer(ModelSerializer):
-    forum_title = serializers.CharField(source="forum.title", read_only=True)
+    forum_title_uz = serializers.CharField(source="forum.title_uz", read_only=True)
+    forum_title_ru = serializers.CharField(source="forum.title_ru", read_only=True)
+    forum_title_en = serializers.CharField(source="forum.title_en", read_only=True)
     forum_id = serializers.IntegerField(source="forum.id", read_only=True)
 
     class Meta:
         model = models.ForumProject
-        fields = ("id", "forum_title", "forum_id", "title", "subtitle", "image", "context", "created", "modified")
-
+        fields = "__all__"
 
 class EventSerializer(ModelSerializer):
     forum_title = serializers.CharField(source="forum.title", read_only=True)

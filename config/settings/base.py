@@ -38,8 +38,7 @@ SECRET_KEY = get_env_value("SECRET_KEY")
 # DEBUG = True
 
 ALLOWED_HOSTS = [get_env_value("ALLOWED_HOSTS")]
-CSRF_TRUSTED_ORIGINS = ['https://088a-213-230-76-69.ngrok-free.app']
-CORS_ORIGIN_ALLOW_ALL = False
+
 # Application definition
 LOCAL_APPS = ["apps.user", "apps.forum", "apps.blog"]
 
@@ -75,13 +74,14 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
-
+# CSRF_TRUSTED_ORIGINS = ['http://0.0.0.0:8000/']  #ngrok temporary url
 # CORS_ALLOWED_ORIGINS = [
 #     "http://localhost:8080",
 #     "http://localhost:8000",
 #     "http://127.0.0.1:8080"
 # ]
 # CORS ORIGIN
+CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOW_ALL_ORIGINS = True
 

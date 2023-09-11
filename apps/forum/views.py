@@ -5,7 +5,7 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from . import models, serializers
 from rest_framework.views import APIView
 from rest_framework.response import Response
-
+# from translation import ForumTranslationOptions
 class PaginationReport(PageNumberPagination):
     page_size = 10  # Number of items per page
     page_size_query_param = "page_size"
@@ -14,9 +14,7 @@ class PaginationReport(PageNumberPagination):
 
 # Organizations Apis
 class OrganizationApiView(MyListAPIView):
-    def get_queryset(self):
-        queryset = models.Organization.objects.all()
-        return queryset
+    queryset = models.Organization.objects.all()
     serializer_class = serializers.OrganizationSerializer
     pagination_class = PaginationReport
     
@@ -48,8 +46,32 @@ class ForumApiView(APIView):
         response_data = serializer.data
         for forum_data in response_data:
             forum = models.Forum.objects.get(id=forum_data['id'])
-            forum_data['organizations'] = [{'organization_title': organization.title, 'organization_id': organization.id} for organization in forum.organization.all()]
-
+            forum_data['title_uz'] = forum.title_uz
+            forum_data['title_ru'] = forum.title_ru
+            forum_data['title_en'] = forum.title_en
+            forum_data['description_uz'] = forum.description_uz
+            forum_data['description_ru'] = forum.description_ru
+            forum_data['description_en'] = forum.description_en
+            forum_event = models.Event.objects.filter(forum=forum)
+            forum_data['events'] = []
+            for event in forum_event:
+                forum_day_times = models.EventTime.objects.filter(event=event)
+                title = event.day_uz
+                times = []
+                for event_time in forum_day_times:
+                    times.append({
+                        'start_time' : event_time.start_time,
+                        'end_time' : event_time.end_time,
+                        'description_uz' : event_time.description_uz,
+                        'description_ru' : event_time.description_ru,
+                        'description_en' : event_time.description_en
+                    })
+                forum_data['events'].append({'times':times, 
+                                             'event_day_uz': event.day_uz,
+                                             'event_day_ru': event.day_ru,
+                                             'event_day_en': event.day_en,
+                                             })
+            forum_data['organizations'] = [{'organization_title_uz': organization.title_uz,'organization_title_en': organization.title_en,'organization_title_ru': organization.title_ru, 'organization_id': organization.id} for organization in forum.organization.all()]
         return paginator.get_paginated_response(response_data)
 
 
@@ -86,7 +108,9 @@ class ForumProjectListApiView(MyListAPIView):
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.annotate(
-            forum_title=F('forum__title')
+            forum_title_uz=F('forum__title_uz'),
+            forum_title_ru=F('forum__title_ru'),
+            forum_title_en=F('forum__title_en')
         )
         return queryset
 
