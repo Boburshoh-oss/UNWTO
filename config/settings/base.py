@@ -82,8 +82,6 @@ CSRF_TRUSTED_ORIGINS = ['http://0.0.0.0:8000/', "http://disgusted-pizzas.surge.s
 # ]
 # CORS ORIGIN
 
-CORS_ORIGIN_ALLOW_ALL = True
-
 CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOW_CREDENTIALS = True
