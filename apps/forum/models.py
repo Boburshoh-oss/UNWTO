@@ -44,7 +44,7 @@ class Event(TimeStampedModel, models.Model):
     forum = models.ForeignKey(Forum, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
-        return self.day
+        return f"{self.day} {self.forum.title}"
 
 class EventTime(models.Model):
     start_time = models.TimeField()

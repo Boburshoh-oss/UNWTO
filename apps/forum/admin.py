@@ -39,7 +39,7 @@ class EventTimeTabularInline(admin.TabularInline):
 
 
 class EventAdmin(ExportActionMixin, admin.ModelAdmin):
-    list_display = ("day", "date", "created", "modified")
+    list_display = ("day","forum", "date", "created", "modified")
     list_filter = ("created", "modified")
     search_fields = ("day", "date")
     inlines = [EventTimeTabularInline]
