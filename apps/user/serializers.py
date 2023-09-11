@@ -2,10 +2,7 @@ from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 from . import models
 from apps.forum.models import Forum
-from apps.forum.serializers import ForumSerializer
 from rest_framework.pagination import PageNumberPagination
-from rest_framework import status
-from rest_framework.response import Response
 from .utils import send_email, get_uid
 
 
@@ -28,7 +25,6 @@ class UserSerializer(serializers.ModelSerializer):
     )
 
     def create(self, validated_data):
-        print(validated_data, "dfsdfsdfsdfsdf")
         invitation_id = models.Inivitation.objects.filter(
             code=validated_data["invitation_id"]
         ).first()
@@ -37,25 +33,21 @@ class UserSerializer(serializers.ModelSerializer):
             trash = validated_data["forum_type"]
             data = trash.split(",")
             data = set(data)
-            print(data)
             for f in data:
                 if f == ",":
                     continue
-                print(f)
                 forum = Forum.objects.filter(id=int(f)).first()
                 keys += forum.short_key + "-"
             
             validated_data["access_id"] = keys + str(get_uid())
             # invitation_id.active = False
             # invitation_id.save()
-            print(validated_data, "dfsdfsdfsdfsdf")
             send_email(
                 email=validated_data["email"],
                 first_name=validated_data["first_name"],
                 last_name=validated_data["last_name"],
                 access_id=validated_data["access_id"],
             )
-            print(validated_data)
             validated_data["forum_type"] = list(data)
             user = super().create(validated_data)
             return user
