@@ -73,6 +73,9 @@ MIDDLEWARE = [
 
 CSRF_TRUSTED_ORIGINS = [
     "http://0.0.0.0:8000/",
+    "https://192.168.10.83/",
+    "https://api.unwtoga25.uz",
+    "https://api.unwtoga25.uz/",
 ]  # ngrok temporary url
 CORS_ALLOW_ALL_ORIGINS = True
 # CORS ORIGIN
