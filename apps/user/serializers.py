@@ -25,6 +25,8 @@ class UserSerializer(serializers.ModelSerializer):
     )
 
     def create(self, validated_data):
+        lang = validated_data["access_id"]
+        validated_data["access_id"] = ""
         invitation_id = models.Inivitation.objects.filter(
             code=validated_data["invitation_id"]
         ).first()
@@ -43,16 +45,17 @@ class UserSerializer(serializers.ModelSerializer):
             keys = list(filter(None, keys))
             keys = "-".join(keys)
             validated_data["access_id"] = keys + "-" + str(get_uid())
-            # invitation_id.active = False
-            # invitation_id.save()
             send_email(
                 email=validated_data["email"],
                 first_name=validated_data["first_name"],
                 last_name=validated_data["last_name"],
                 access_id=validated_data["access_id"],
+                lang=lang,
             )
             validated_data["forum_type"] = list(data)
             user = super().create(validated_data)
+            invitation_id.active = False
+            invitation_id.save()
             return user
         else:
             raise serializers.ValidationError(

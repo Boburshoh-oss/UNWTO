@@ -4,12 +4,17 @@ from django.forms import ValidationError
 import random
 from config.settings.base import get_env_value
 import smtplib
+
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
 OWN_EMAIL = get_env_value("OWN_EMAIL")  # Receivers gmail address
 # Google App password NOT gmail password
 OWN_PASSWORD = get_env_value("OWN_PASSWORD")
 
+
 def get_uid():
-    code ="".join(random.choices("0123456789", k=7))
+    code = "".join(random.choices("0123456789", k=7))
     inv = Inivitation.objects.filter(code=code).exists()
     if inv:
         get_uid()
@@ -30,11 +35,34 @@ def create_invitaion(num_of_qrcodes):
         return []
 
 
-def send_email(first_name,last_name, email, access_id):
-    """In order to use SMPTLIB, you have to give permission to receivers gmail, acception external mails. FOr this turn on TWO STEP VERIFICATION on accaunt settings and create new app. user given 16 char app`s password as host email`s password"""
-    email_message = f"Subject:Taklifnoma\nHurmatli {first_name} {last_name}!\nSizning ID raqamingiz: \n{access_id}"
-    
+def send_email(first_name, last_name, email, access_id, lang):
+    msg = MIMEMultipart()
+    msg["From"] = "unwtoforum2023@gmail.com"
+    msg["To"] = email
+
+    if lang == "ru":
+        msg["Subject"] = "Пригласительная"
+        text = f"Уважаемый {first_name} {last_name}!\nВаш ID код: \n{access_id}"
+        email_message = MIMEText(text, "plain", "utf-8")
+    elif lang == "uz":
+        msg["Subject"] = "Taklifnoma"
+        email_message = MIMEText(
+            f"Hurmatli {first_name} {last_name}!\nSizning ID raqamingiz: \n{access_id}",
+            "plain",
+        )
+    else:
+        msg["Subject"] = "Invitation"
+        email_message = MIMEText(
+            f"Dear {first_name} {last_name}!\nYour ID: \n{access_id}", "plain"
+        )
+
+    msg.attach(email_message)
+
     with smtplib.SMTP("smtp.gmail.com", port=587) as connection:
         connection.starttls()
-        connection.login('unwtoforum2023@gmail.com', 'lzlpfadqzlpwmqpt')
-        con = connection.sendmail(from_addr='unwtoforum2023@gmail.com', to_addrs=email, msg=email_message)
+        connection.login(
+            "unwtoforum2023@gmail.com", "lzlpfadqzlpwmqpt"
+        )  # Better to store this in environment variables
+        connection.sendmail(
+            from_addr="unwtoforum2023@gmail.com", to_addrs=email, msg=msg.as_string()
+        )
