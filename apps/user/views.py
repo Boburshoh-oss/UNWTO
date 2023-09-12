@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.generics import (
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
+    CreateAPIView,
 )
 from rest_framework import status
 from rest_framework.response import Response
@@ -89,10 +90,10 @@ class UserApiView(MyListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-class UserCreateApiView(ListCreateAPIView):
-    queryset = User.objects.all().order_by("-pk")
+
+class UserCreateApiView(CreateAPIView):
+    queryset = User.objects.all()
     serializer_class = UserSerializer
-    pagination_class = PaginationReport
 
 
 class UserRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
