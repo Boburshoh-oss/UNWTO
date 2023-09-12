@@ -6,7 +6,7 @@ from model_utils.models import TimeStampedModel
 
 
 class Organization(TimeStampedModel, models.Model):
-    title = models.CharField(max_length=255, blank=True)
+    title = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -18,7 +18,7 @@ class Forum(TimeStampedModel, models.Model):
     ("IF", "Investment Forum"),
     ("EF", "Educational Forum"),
 )   
-    title = models.CharField(max_length=255, blank=True)
+    title = models.CharField(max_length=255, blank=True, null=True)
     short_key=models.CharField(choices=CHOICES, default="GA",max_length=255,) 
     organization = models.ManyToManyField(Organization)
     description = models.TextField()
@@ -29,8 +29,8 @@ class Forum(TimeStampedModel, models.Model):
 
 class ForumProject(TimeStampedModel, models.Model):
     forum = models.ForeignKey(Forum, on_delete=models.CASCADE)
-    title = models.CharField(max_length=255, blank=True)
-    subtitle = models.CharField(max_length=255, blank=True)
+    title = models.CharField(max_length=255, blank=True, null=True)
+    subtitle = models.CharField(max_length=255, blank=True, null=True)
     image = models.ImageField(upload_to="media/projects/")
     context = models.TextField()
 
