@@ -42,7 +42,7 @@ class Event(TimeStampedModel, models.Model):
     day = models.CharField(max_length=255)
     date = models.DateField()
     forum = models.ForeignKey(Forum, on_delete=models.CASCADE)
-
+    ordered = models.IntegerField(default=0)
     def __str__(self) -> str:
         return f"{self.day} {self.forum.title}"
 

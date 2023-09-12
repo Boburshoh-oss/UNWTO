@@ -1,11 +1,9 @@
 from django.db import models
 from django_countries.fields import CountryField
 from model_utils.models import TimeStampedModel
-
 from apps.forum.models import Forum, Organization
 
-
-# # Create your models here.
+# Create your models here.
 class Inivitation(TimeStampedModel, models.Model):
     code = models.CharField(unique=True, max_length=255)
     active = models.BooleanField(default=True)
@@ -20,6 +18,7 @@ class User(TimeStampedModel, models.Model):
     last_name = models.CharField(max_length=255)
     date_of_birth = models.DateField()
     country = CountryField()
+    position = models.CharField(max_length=255)
     email = models.EmailField(max_length=255)
     passport = models.CharField(max_length=20)
     expire_date = models.DateField()

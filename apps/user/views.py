@@ -2,8 +2,8 @@ from rest_framework.pagination import PageNumberPagination
 from apps.forum.utils.list_api_view import MyListAPIView
 from rest_framework.views import APIView
 from rest_framework.generics import (
-    ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
+    CreateAPIView,
 )
 from rest_framework import status
 from rest_framework.response import Response
@@ -80,6 +80,7 @@ class InvitationCheckApiView(APIView):
             {"code": "Code is required."}, status=status.HTTP_400_BAD_REQUEST
         )
 
+
 class InivitationRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Inivitation.objects.all()
     serializer_class = InivitationSerializer
@@ -89,10 +90,10 @@ class UserApiView(MyListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-class UserCreateApiView(ListCreateAPIView):
-    queryset = User.objects.all().order_by("-pk")
+
+class UserCreateApiView(CreateAPIView):
+    queryset = User.objects.all()
     serializer_class = UserSerializer
-    pagination_class = PaginationReport
 
 
 class UserRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):

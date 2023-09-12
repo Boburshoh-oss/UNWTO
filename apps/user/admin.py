@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django_admin_multi_select_filter.filters import MultiSelectFieldListFilter
 from import_export.admin import ExportActionMixin
 from .models import *
 from .resources import UserResource
@@ -17,18 +16,24 @@ class InivitationAdmin(ExportActionMixin, admin.ModelAdmin):
     search_fields = ("code",)
 
 
-from django.contrib.admin import SimpleListFilter
-
-
-class ForumTypeListFilter(SimpleListFilter):
-    title = 'Forum Type'
+class ForumTypeListFilter(admin.SimpleListFilter):
+    title = _('Forum Type')
     parameter_name = 'forum_type'
 
     def lookups(self, request, model_admin):
-        return [(str(forum.id), forum.title) for forum in Forum.objects.all()]
+        data = []
+        for user in User.objects.all():
+            access_id = user.access_id.split("-")
+            get_short_key = access_id[:len(access_id)-1]
+            show = "-".join(get_short_key)
+            data.append((show, show))
+        return set(data)
 
     def queryset(self, request, queryset):
         if self.value():
+            if request.GET.get('forum_type'):
+                return queryset.filter(access_id__startswith=self.value())
+
             return queryset.filter(forum_type__id=self.value())
 
 
@@ -40,6 +45,7 @@ class UserAdmin(admin.ModelAdmin):
         "last_name",
         "date_of_birth",
         "country",
+        "position",
         "expire_date",
         "organization",
         "access_id",

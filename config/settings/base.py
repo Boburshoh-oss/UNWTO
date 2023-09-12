@@ -43,41 +43,42 @@ ALLOWED_HOSTS = [get_env_value("ALLOWED_HOSTS")]
 LOCAL_APPS = ["apps.user", "apps.forum", "apps.blog"]
 
 INSTALLED_APPS = [
-    'modeltranslation',
+    "modeltranslation",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'rest_framework',
-
+    "rest_framework",
     "django_filters",
-    'drf_yasg',
-    'corsheaders',
-    'import_export',
-
-    
+    "drf_yasg",
+    "corsheaders",
+    "import_export",
 ] + LOCAL_APPS
 
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    'corsheaders.middleware.CorsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
-CSRF_TRUSTED_ORIGINS = ['http://0.0.0.0:8000/', "http://disgusted-pizzas.surge.sh", "https://disgusted-pizzas.surge.sh", "https://4b12-195-158-3-178.ngrok-free.app"]  #ngrok temporary url
+CSRF_TRUSTED_ORIGINS = [
+    "http://0.0.0.0:8000/",
+    "https://192.168.10.83",
+    "https://api.unwtoga25.uz",
+    "https://api.unwtoga25.uz/",
+]  # ngrok temporary url
 CORS_ALLOW_ALL_ORIGINS = True
 # CORS ORIGIN
-
 
 
 CORS_ALLOW_CREDENTIALS = True
@@ -151,31 +152,30 @@ USE_L10N = True
 
 USE_I18N = True
 
-TIME_ZONE = 'Asia/Tashkent'
+TIME_ZONE = "Asia/Tashkent"
 
 LANGUAGES = (
-    ('en', 'English'),
-    ('uz', 'Uzbek'),
-    ('ru', 'Russian'),
+    ("en", "English"),
+    ("uz", "Uzbek"),
+    ("ru", "Russian"),
 )
 
 LOCALE_PATHS = [
-    BASE_DIR / 'locale/',
+    BASE_DIR / "locale/",
 ]
 
-MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
-MODELTRANSLATION_LANGUAGES = ('uz', 'en', 'ru')
+MODELTRANSLATION_DEFAULT_LANGUAGE = "en"
+MODELTRANSLATION_LANGUAGES = ("uz", "en", "ru")
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
 MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "../","media/")
+MEDIA_ROOT = os.path.join(BASE_DIR, "../", "media/")
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
