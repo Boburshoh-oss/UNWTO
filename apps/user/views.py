@@ -80,6 +80,7 @@ class InvitationCheckApiView(APIView):
             {"code": "Code is required."}, status=status.HTTP_400_BAD_REQUEST
         )
 
+
 class InivitationRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Inivitation.objects.all()
     serializer_class = InivitationSerializer

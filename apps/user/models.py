@@ -1,11 +1,9 @@
 from django.db import models
 from django_countries.fields import CountryField
 from model_utils.models import TimeStampedModel
-
 from apps.forum.models import Forum, Organization
 
-
-# # Create your models here.
+# Create your models here.
 class Inivitation(TimeStampedModel, models.Model):
     code = models.CharField(unique=True, max_length=255)
     active = models.BooleanField(default=True)

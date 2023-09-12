@@ -3,7 +3,7 @@ from django_admin_multi_select_filter.filters import MultiSelectFieldListFilter
 from import_export.admin import ExportActionMixin
 from .models import *
 from .resources import UserResource
-
+from django.utils.translation import gettext_lazy as _
 
 # Register your models here.
 class InivitationAdmin(ExportActionMixin, admin.ModelAdmin):
@@ -12,18 +12,24 @@ class InivitationAdmin(ExportActionMixin, admin.ModelAdmin):
     search_fields = ("code",)
 
 
-from django.contrib.admin import SimpleListFilter
-
-
-class ForumTypeListFilter(SimpleListFilter):
-    title = 'Forum Type'
+class ForumTypeListFilter(admin.SimpleListFilter):
+    title = _('Forum Type')
     parameter_name = 'forum_type'
 
     def lookups(self, request, model_admin):
-        return [(str(forum.id), forum.title) for forum in Forum.objects.all()]
+        data = []
+        for user in User.objects.all():
+            access_id = user.access_id.split("-")
+            serach = access_id[:len(access_id) -1]
+            show = "-".join(serach)
+            data.append((show, show))
+        return data
 
     def queryset(self, request, queryset):
         if self.value():
+            if request.GET.get('forum_type'):
+                return queryset.filter(access_id__startswith=self.value())
+
             return queryset.filter(forum_type__id=self.value())
 
 
