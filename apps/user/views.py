@@ -2,7 +2,6 @@ from rest_framework.pagination import PageNumberPagination
 from apps.forum.utils.list_api_view import MyListAPIView
 from rest_framework.views import APIView
 from rest_framework.generics import (
-    ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
     CreateAPIView,
 )
