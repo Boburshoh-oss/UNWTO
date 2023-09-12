@@ -21,9 +21,8 @@ class ForumTypeListFilter(admin.SimpleListFilter):
             access_id = user.access_id.split("-")
             get_short_key = access_id[:len(access_id)-1]
             show = "-".join(get_short_key)
-            if (show, show) not in data:
-                data.append((show, show))
-        return data
+            data.append((show, show))
+        return set(data)
 
     def queryset(self, request, queryset):
         if self.value():
