@@ -34,7 +34,7 @@ services:
     volumes:
       - static_volume:/code/staticfiles
       - media_volume:/code/media
-      # - ./nginx:/etc/nginx/conf.d
+      - ./nginx:/etc/nginx/conf.d
     depends_on:
       - web
 
