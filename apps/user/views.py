@@ -2,7 +2,6 @@ from rest_framework.pagination import PageNumberPagination
 from apps.forum.utils.list_api_view import MyListAPIView
 from rest_framework.views import APIView
 from rest_framework.generics import (
-    ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
     CreateAPIView,
 )
@@ -80,6 +79,7 @@ class InvitationCheckApiView(APIView):
         return Response(
             {"code": "Code is required."}, status=status.HTTP_400_BAD_REQUEST
         )
+
 
 class InivitationRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Inivitation.objects.all()
