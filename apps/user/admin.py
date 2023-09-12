@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django_admin_multi_select_filter.filters import MultiSelectFieldListFilter
 from import_export.admin import ExportActionMixin
 from .models import *
 from .resources import UserResource
@@ -20,9 +19,10 @@ class ForumTypeListFilter(admin.SimpleListFilter):
         data = []
         for user in User.objects.all():
             access_id = user.access_id.split("-")
-            serach = access_id[:len(access_id) -1]
-            show = "-".join(serach)
-            data.append((show, show))
+            get_short_key = access_id[:len(access_id)-1]
+            show = "-".join(get_short_key)
+            if (show, show) not in data:
+                data.append((show, show))
         return data
 
     def queryset(self, request, queryset):
