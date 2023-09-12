@@ -18,14 +18,14 @@ class User(TimeStampedModel, models.Model):
     last_name = models.CharField(max_length=255)
     date_of_birth = models.DateField()
     country = CountryField()
-    org_name = models.CharField(max_length=255, blank=True)
-    position = models.CharField(max_length=255, blank=True)
+    org_name = models.CharField(max_length=255, blank=True, null=True)
+    position = models.CharField(max_length=255, blank=True, null=True)
     email = models.EmailField(max_length=255)
     passport = models.CharField(max_length=20)
     expire_date = models.DateField()
     image = models.ImageField(upload_to="media/profile/")
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
-    access_id = models.CharField(max_length=30, blank=True, unique=True)
+    access_id = models.CharField(max_length=30, blank=True, unique=True, null=True)
     invitation_id = models.ForeignKey(Inivitation, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
