@@ -52,7 +52,7 @@ class ForumApiView(APIView):
             forum_data['description_uz'] = forum.description_uz
             forum_data['description_ru'] = forum.description_ru
             forum_data['description_en'] = forum.description_en
-            forum_event = models.Event.objects.filter(forum=forum).order_by('-id')
+            forum_event = models.Event.objects.filter(forum=forum).order_by('ordered')
             forum_data['events'] = []
             for event in forum_event:
                 forum_day_times = models.EventTime.objects.filter(event=event).order_by('start_time')
