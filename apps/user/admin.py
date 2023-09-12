@@ -7,6 +7,7 @@ from openpyxl import Workbook, styles
 from openpyxl.drawing.image import Image
 from django.http import HttpResponse
 from openpyxl import Workbook
+from django.utils.translation import gettext_lazy as _
 
 
 # Register your models here.
