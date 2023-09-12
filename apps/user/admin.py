@@ -35,6 +35,7 @@ class UserAdmin(ExportActionMixin, admin.ModelAdmin):
         "last_name",
         "date_of_birth",
         "country",
+        "position",
         "expire_date",
         "organization",
         "access_id",
