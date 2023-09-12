@@ -38,8 +38,11 @@ class UserSerializer(serializers.ModelSerializer):
                     continue
                 forum = Forum.objects.filter(id=int(f)).first()
                 keys += forum.short_key + "-"
-            
-            validated_data["access_id"] = keys + str(get_uid())
+
+            keys = sorted(keys.split("-"))
+            keys = list(filter(None, keys))
+            keys = "-".join(keys)
+            validated_data["access_id"] = keys + "-" + str(get_uid())
             # invitation_id.active = False
             # invitation_id.save()
             send_email(
