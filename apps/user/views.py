@@ -11,8 +11,11 @@ from .models import Inivitation, User
 from .serializers import UserSerializer, InivitationSerializer
 from django.shortcuts import get_object_or_404
 from .utils import create_invitaion
-
-
+from django.shortcuts import render, redirect
+from django.http import FileResponse, HttpResponse, HttpResponseNotFound
+import os
+from rest_framework.renderers import MultiPartRenderer
+from rest_framework.decorators import renderer_classes, api_view
 class PaginationReport(PageNumberPagination):
     page_size = 10
     page_size_query_param = "page_size"
@@ -99,3 +102,27 @@ class UserCreateApiView(CreateAPIView):
 class UserRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+
+def search(request):
+    try:
+        number = int(request.POST.get("code"))
+    except (KeyError, TypeError, ValueError):
+        return Response({"error": "Invalid input"})
+
+    if number <= 0 or number > 10000:
+        return Response({"error": "Number of invitations must be between 1 and 10,000"})
+
+    invitations = create_invitaion(number)
+    with open("media/invitaions.txt", "a") as file:
+        for inv in invitations:
+            file.write(inv.code + "\n")
+    content = {
+        'message' : f"{number} invitations created successfully!",
+        "yaratildi": "true"
+    }
+    return render(request, "entities/index.html", context=content)
+
+
+def download_invitations(request):
+   return redirect('/media/invitaions.txt')
