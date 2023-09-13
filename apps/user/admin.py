@@ -78,9 +78,9 @@ class UserAdmin(admin.ModelAdmin):
         "first_name",
         "last_name",
         "country",
-        "organization",
+        "organization__title",
         "access_id",
-        "invitation_id",
+        "invitation_id__code",
     )
     actions = ["export_selected_to_excel"]
 
