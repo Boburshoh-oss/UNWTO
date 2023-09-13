@@ -16,3 +16,5 @@ django-admin-multi-select-filter
 django-cors-headers
 XlsxWriter
 pycountry
+django-ckeditor
+
