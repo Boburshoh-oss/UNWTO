@@ -14,7 +14,7 @@ OWN_PASSWORD = get_env_value("OWN_PASSWORD")
 
 
 def get_uid():
-    code = "".join(random.choices("0123456789asdfghjklqwertyuiopzxcvbnm!@$%&?_-", k=7))
+    code = "".join(random.choices("0123456789", k=7))
     inv = Inivitation.objects.filter(code=code).exists()
     if inv:
         get_uid()
