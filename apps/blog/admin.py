@@ -15,3 +15,8 @@ class ContactAdmin(TranslationAdmin, admin.ModelAdmin):
     search_fields = ("name","title")
     list_filter = ("active","type")
 
+@admin.register(Connect)
+class ConnectAdmin(TranslationAdmin, admin.ModelAdmin):
+    list_display = ("type","title","name","active")
+    search_fields = ("name","title")
+    list_filter = ("active","type")

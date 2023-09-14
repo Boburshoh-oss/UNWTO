@@ -31,3 +31,18 @@ class Contact(models.Model):
     
     def __str__(self) -> str:
         return self.title
+
+class Connect(models.Model):
+    TYPES = (
+        (0, "Link"),
+        (1, "Email"),
+        (2, "Telefon"),
+    )
+    title = models.CharField(max_length=255, blank=True)
+    type =models.IntegerField(choices=TYPES, default=2)
+    name = models.CharField(max_length=20, blank=True)
+    active = models.BooleanField(default=True)
+    created = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self) -> str:
+        return self.title
