@@ -27,6 +27,7 @@ class Contact(models.Model):
     type =models.IntegerField(choices=TYPES, default=2)
     name = models.CharField(max_length=20, blank=True)
     active = models.BooleanField(default=True)
+    created = models.DateTimeField(auto_now_add=True)
     
     def __str__(self) -> str:
         return self.title
