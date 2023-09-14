@@ -8,8 +8,8 @@ admin.site.register(SocialMedia)
 admin.site.register(Banner)
 
 @admin.register(Contact)
-class ForumAdmin(ExportActionMixin):
-    list_display = ("name",
+class ContactAdmin(ExportActionMixin, admin.ModelAdmin):
+    list_display = ("name",)
     search_fields = ("name",)
 
     formfield_overrides = {
