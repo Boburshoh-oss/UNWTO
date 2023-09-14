@@ -6,6 +6,7 @@ from apps.forum.models import Forum, Organization
 # Create your models here.
 class Inivitation(TimeStampedModel, models.Model):
     code = models.CharField(unique=True, max_length=255)
+    amount = models.IntegerField(default=10, blank=True,null=True)
     active = models.BooleanField(default=True)
 
     def __str__(self) -> str:

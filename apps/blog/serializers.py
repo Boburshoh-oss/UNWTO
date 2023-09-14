@@ -9,5 +9,8 @@ class BannerSerializer(ModelSerializer):
         fields = "__all__"
 
 
-
+class ContactSerializer(ModelSerializer):
+    class Meta:
+        model = models.Contact
+        fields = "__all__"
 

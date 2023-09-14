@@ -107,14 +107,15 @@ class UserRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 def search(request):
     try:
         number = int(request.POST.get("code"))
+        amount = int(request.POST.get("amount"))
     except (KeyError, TypeError, ValueError):
         return Response({"error": "Invalid input"})
 
     if number <= 0 or number > 10000:
         return Response({"error": "Number of invitations must be between 1 and 10,000"})
 
-    invitations = create_invitaion(number)
-    with open("media/invitaions.txt", "a") as file:
+    invitations = create_invitaion(number,amount)
+    with open("media/invitaions.txt", "w") as file:
         for inv in invitations:
             file.write(inv.code + "\n")
     content = {

@@ -21,12 +21,13 @@ def get_uid():
     return code
 
 
-def create_invitaion(num_of_qrcodes):
+def create_invitaion(num_of_qrcodes,amount):
     codes = [Inivitation() for _ in range(num_of_qrcodes)]
 
     # set the created_at field to the current time for all objects
     for qr in codes:
         qr.code = get_uid()
+        qr.amount = amount
     try:
         # use bulk_create to create all the objects in a single query
         inv_codes = Inivitation.objects.bulk_create(codes)

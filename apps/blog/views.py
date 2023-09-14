@@ -12,3 +12,6 @@ class BannerApiView(generics.ListAPIView):
     serializer_class = serializers.BannerSerializer
 
 
+class ContactListApiView(generics.ListAPIView):
+    queryset = Banner.objects.all()
+    serializer_class = serializers.ContactSerializer

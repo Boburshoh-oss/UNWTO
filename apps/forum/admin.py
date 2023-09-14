@@ -40,7 +40,10 @@ class ForumProjectAdmin(ExportActionMixin,admin.ModelAdmin):
     list_display = ("title", "subtitle", "context", "created", "modified")
     list_filter = ("created", "modified")
     search_fields = ("title", "subtitle", "context")
-
+    
+    formfield_overrides = {
+        models.TextField: {'widget': CKEditorWidget()},
+    }
 
 class EventTimeAdmin(admin.ModelAdmin):
     list_display = ("start_time", "end_time", "description")

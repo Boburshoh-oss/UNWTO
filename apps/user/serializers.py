@@ -54,7 +54,9 @@ class UserSerializer(serializers.ModelSerializer):
             )
             validated_data["forum_type"] = list(data)
             user = super().create(validated_data)
-            invitation_id.active = False
+            invitation_id.amount -= 1
+            if invitation_id.amount<=0:
+                invitation_id.active = False
             invitation_id.save()
             return user
         else:

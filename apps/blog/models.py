@@ -16,3 +16,10 @@ class SocialMedia(models.Model):
     name = models.CharField(max_length=255)
     link = models.URLField()
     logo = models.FileField(upload_to="media/logo/")
+
+class Contact(models.Model):
+    name = models.CharField(max_length=20)
+    phone_number = models.CharField(max_length=20)
+    
+    def __str__(self) -> str:
+        return self.name

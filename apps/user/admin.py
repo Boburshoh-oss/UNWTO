@@ -16,7 +16,7 @@ from django.utils.translation import gettext_lazy as _
 # Register your models here.
 class InivitationAdmin(ExportActionMixin, admin.ModelAdmin):
     change_list_template="entities/invitation_redirect.html"
-    list_display = ("code", "active")
+    list_display = ("code", "amount", "active")
     list_filter = ("created", "modified")
     search_fields = ("code",)
 
@@ -96,9 +96,12 @@ class UserAdmin(admin.ModelAdmin):
                 "Familya",
                 "Tug'ulgan kuni",
                 "Davlati",
-                "email",
-                "Tugash muddati",
+                "Email",
+                "Passport",
+                "Passport amal qilish muddati",
                 "Tashkilot",
+                "Tashkilot nomi",
+                "Lavozimi",
                 "Kirish ID",
                 "Taklifnoma ID",
                 "Rasmi",
@@ -136,10 +139,13 @@ class UserAdmin(admin.ModelAdmin):
                     project.first_name,
                     project.last_name,
                     project.date_of_birth,
-                    "Uzbekiston",
+                    " ",
                     project.email,
+                    project.passport,
                     project.expire_date,
                     project.organization.title,
+                    project.org_name,
+                    project.position,
                     project.access_id,
                     project.invitation_id.code,
                     " ",
@@ -152,9 +158,9 @@ class UserAdmin(admin.ModelAdmin):
                 img.width = 100  # Adjust the image size as needed
                 img.height = 100
                 worksheet.add_image(
-                    img, "J{}".format(worksheet.max_row)
+                    img, "M{}".format(worksheet.max_row)
                 )  # Add image to column D
-                work_image = worksheet["J" + str(s)]
+                work_image = worksheet["M" + str(s)]
 
                 work_image.font = image_style
             worksheet["C" + str(s)] = project.date_of_birth
