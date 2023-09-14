@@ -19,7 +19,7 @@ class SocialMedia(models.Model):
 
 class Contact(models.Model):
     name = models.CharField(max_length=20)
-    phone_number = models.CharField(max_length=20)
+    context = models.TextField()
     
     def __str__(self) -> str:
         return self.name
