@@ -1,7 +1,7 @@
 from . import serializers
 from rest_framework.views import APIView
 from rest_framework import generics
-from .models import Banner
+from .models import Banner, Contact
 # Create your views here.
 
 
