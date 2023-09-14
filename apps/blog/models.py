@@ -17,7 +17,7 @@ class SocialMedia(models.Model):
     link = models.URLField()
     logo = models.FileField(upload_to="media/logo/")
 
-class Contact(TimeStampedModel,models.Model):
+class Contact(models.Model):
     TYPES = (
         (0, "Link"),
         (1, "Email"),
