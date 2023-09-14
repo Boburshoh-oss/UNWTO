@@ -9,11 +9,7 @@ from .models import *
 admin.site.register(SocialMedia)
 admin.site.register(Banner)
 
-@admin.register(Contact)
-class ContactAdmin(TranslationAdmin, admin.ModelAdmin):
-    list_display = ("type","title","name","active")
-    search_fields = ("name","title")
-    list_filter = ("active","type")
+
 
 @admin.register(Connect)
 class ConnectAdmin(TranslationAdmin, admin.ModelAdmin):

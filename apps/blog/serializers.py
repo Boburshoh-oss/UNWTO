@@ -11,6 +11,6 @@ class BannerSerializer(ModelSerializer):
 
 class ContactSerializer(ModelSerializer):
     class Meta:
-        model = models.Contact
+        model = models.Connect
         fields = "__all__"
 
