@@ -28,6 +28,7 @@ class Connect(models.Model):
     title = models.CharField(max_length=255, blank=True)
     type =models.IntegerField(choices=TYPES, default=2)
     name = models.CharField(max_length=20, blank=True)
+    link = models.CharField(max_length=255,null=True,blank=True)
     active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     
