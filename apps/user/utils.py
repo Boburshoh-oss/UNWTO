@@ -2,15 +2,16 @@ from .models import Inivitation
 from django.db import IntegrityError
 from django.forms import ValidationError
 import random
-from config.settings.base import get_env_value
+# from config.settings.base import get_env_value
 import smtplib
+from decouple import config
 
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-OWN_EMAIL = get_env_value("OWN_EMAIL")  # Receivers gmail address
-# Google App password NOT gmail password
-OWN_PASSWORD = get_env_value("OWN_PASSWORD")
+# OWN_EMAIL = get_env_value("OWN_EMAIL")  # Receivers gmail address
+# # Google App password NOT gmail password
+# OWN_PASSWORD = get_env_value("OWN_PASSWORD")
 
 
 def get_uid():
@@ -62,7 +63,7 @@ def send_email(first_name, last_name, email, access_id, lang):
     with smtplib.SMTP("smtp.gmail.com", port=587) as connection:
         connection.starttls()
         connection.login(
-            "unwtoforum2023@gmail.com", "lzlpfadqzlpwmqpt"
+            config('OWN_EMAIL'), config('OWN_PASSWORD')
         )  # Better to store this in environment variables
         connection.sendmail(
             from_addr="unwtoforum2023@gmail.com", to_addrs=email, msg=msg.as_string()
