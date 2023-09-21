@@ -28,6 +28,7 @@ class User(TimeStampedModel, models.Model):
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
     access_id = models.CharField(max_length=30, blank=True, unique=True, null=True)
     invitation_id = models.ForeignKey(Inivitation, on_delete=models.CASCADE)
+    phone_number = models.CharField(max_length=13,blank=True,null=True)
 
     def __str__(self) -> str:
         return f"{self.first_name}-{self.last_name}"

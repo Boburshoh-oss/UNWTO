@@ -67,6 +67,7 @@ class UserAdmin(admin.ModelAdmin):
         "organization",
         "access_id",
         "invitation_id",
+        "phone_number",
     )
     list_filter = (
         "created",
@@ -81,6 +82,7 @@ class UserAdmin(admin.ModelAdmin):
         "organization__title",
         "access_id",
         "invitation_id__code",
+        "phone_number"
     )
     actions = ["export_selected_to_excel"]
 
@@ -99,6 +101,7 @@ class UserAdmin(admin.ModelAdmin):
                 "Email",
                 "Passport",
                 "Passport amal qilish muddati",
+                "Telfon raqam",
                 "Tashkilot",
                 "Tashkilot nomi",
                 "Lavozimi",
@@ -143,6 +146,7 @@ class UserAdmin(admin.ModelAdmin):
                     project.email,
                     project.passport,
                     project.expire_date,
+                    project.phone_number,
                     project.organization.title,
                     project.org_name,
                     project.position,
@@ -158,9 +162,9 @@ class UserAdmin(admin.ModelAdmin):
                 img.width = 100  # Adjust the image size as needed
                 img.height = 100
                 worksheet.add_image(
-                    img, "M{}".format(worksheet.max_row)
+                    img, "N{}".format(worksheet.max_row)
                 )  # Add image to column D
-                work_image = worksheet["M" + str(s)]
+                work_image = worksheet["N" + str(s)]
 
                 work_image.font = image_style
             worksheet["C" + str(s)] = project.date_of_birth
