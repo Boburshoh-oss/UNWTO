@@ -1,3 +1,4 @@
+import os
 from django.contrib import admin
 from import_export.admin import ExportActionMixin
 from .models import *
@@ -5,14 +6,14 @@ from .resources import UserResource
 import pycountry
 from openpyxl import Workbook, styles
 from openpyxl.drawing.image import Image
+from PIL import Image as PILImage
 from django.http import HttpResponse
 from openpyxl import Workbook
 from django.urls import path
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.utils.translation import gettext_lazy as _
-import mimetypes  # Add this line here
-mimetypes.add_type('image/mpo', '.mpo')
+from .utils import convert_to_jpeg
 
 # Register your models here.
 class InivitationAdmin(ExportActionMixin, admin.ModelAdmin):
@@ -159,7 +160,16 @@ class UserAdmin(admin.ModelAdmin):
 
             # Add the image to the Excel file
             if project.image:
-                img = Image(project.image.path)
+                image_path = project.image.path
+                # new_image_path = convert_to_jpeg(image_path)  # Convert to JPEG if it's MPO
+                img = Image(image_path) 
+
+                if img.format == "mpo":
+                    with PILImage.open(image_path) as img:
+                        jpeg_path = os.path.splitext(image_path)[0] + ".jpeg"
+                        img.convert("RGB").save(jpeg_path, "JPEG")
+                        img = Image(jpeg_path) 
+
                 img.width = 100  # Adjust the image size as needed
                 img.height = 100
                 worksheet.add_image(

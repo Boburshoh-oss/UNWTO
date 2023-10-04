@@ -9,6 +9,11 @@ from decouple import config
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
+from PIL import Image
+import os
+
+
+
 # OWN_EMAIL = get_env_value("OWN_EMAIL")  # Receivers gmail address
 # # Google App password NOT gmail password
 # OWN_PASSWORD = get_env_value("OWN_PASSWORD")
@@ -68,3 +73,13 @@ def send_email(first_name, last_name, email, access_id, lang):
         connection.sendmail(
             from_addr="unwtoforum2023@gmail.com", to_addrs=email, msg=msg.as_string()
         )
+
+
+def convert_to_jpeg(image_path):
+    with Image.open(image_path) as img:
+        if img.format == "mpo":
+            print("kirdimi funskiyaga")
+            jpeg_path = os.path.splitext(image_path)[0] + ".jpeg"
+            img.convert("RGB").save(jpeg_path, "JPEG")
+            return jpeg_path
+    return image_path  # if not MPO, return the original path
