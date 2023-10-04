@@ -170,3 +170,51 @@ class EventTimeDetailApiView(RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.EventTimeSerializer
 
 
+# Forum Apis
+class MapApiView(APIView):
+    pagination_class = PaginationReport
+
+    def get(self, request):
+        queryset = models.Map.objects.all().order_by('-pk')
+        queryset = queryset.annotate(
+            map_title=F('title')
+        )
+
+        # Instantiate the paginator
+        paginator = self.pagination_class()
+
+        # Paginate the queryset
+        result_page = paginator.paginate_queryset(queryset, request)
+
+        # Serialize the paginated data
+        serializer = serializers.MapSerializer(result_page, many=True)
+
+        # Return the paginated response with organization titles
+        response_data = serializer.data
+        for map_data in response_data:
+            map = models.Map.objects.get(id=map_data['id'])
+            map_data['title_uz'] = map.title_uz
+            map_data['title_ru'] = map.title_ru
+            map_data['title_en'] = map.title_en
+
+            map_event = models.MapEvent.objects.filter(map=map).order_by('ordered')
+            map_data['events'] = []
+            for event in map_event:
+                map_day_times = models.MapEventTime.objects.filter(event=event).order_by('start_time')
+                # title = event.day_uz
+                times = []
+                for event_time in map_day_times:
+                    times.append({
+                        'start_time' : event_time.start_time.strftime("%H:%M"),
+                        'end_time' : event_time.end_time.strftime("%H:%M"),
+                        'description_uz' : event_time.description_uz,
+                        'description_ru' : event_time.description_ru,
+                        'description_en' : event_time.description_en
+                    })
+                map_data['events'].append({'times':times, 
+                                             'event_day_uz': event.day_uz,
+                                             'event_day_ru': event.day_ru,
+                                             'event_day_en': event.day_en,
+                                             })
+
+        return paginator.get_paginated_response(response_data)

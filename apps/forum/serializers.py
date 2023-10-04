@@ -44,3 +44,9 @@ class EventTimeSerializer(ModelSerializer):
     class Meta:
         model = models.EventTime
         fields = "__all__"
+
+
+class MapSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Map
+        fields = ("id", "title","file","created", "modified")

@@ -11,6 +11,8 @@ urlpatterns = [
     path('forums/', views.ForumApiView.as_view(), name="forum-list"),
     path('forum/<int:pk>/', views.ForumDetailApiView.as_view(), name="forum-detail"),
 
+    path('map/',views.MapApiView.as_view()),
+
     # ForumProject APIs
     path('forum-project/create/', views.ForumProjectCreateApiView.as_view(), name="forum-project-create"),
     path('forum-projects/', views.ForumProjectListApiView.as_view(), name="forum-project-list"),
