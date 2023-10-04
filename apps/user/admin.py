@@ -163,8 +163,8 @@ class UserAdmin(admin.ModelAdmin):
                 image_path = project.image.path
                 # new_image_path = convert_to_jpeg(image_path)  # Convert to JPEG if it's MPO
                 img = Image(image_path) 
-
-                if img.format == "mpo":
+                images_formats = ["png","jpeg","jpg"]
+                if img.format not in images_formats:
                     with PILImage.open(image_path) as img:
                         jpeg_path = os.path.splitext(image_path)[0] + ".jpeg"
                         img.convert("RGB").save(jpeg_path, "JPEG")
