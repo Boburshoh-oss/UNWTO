@@ -56,7 +56,7 @@ class EventTime(models.Model):
     
 class Map(TimeStampedModel, models.Model):
     title = models.CharField(max_length=255, blank=True, null=True)
-    file = models.FileField(upload_to ='maps/')
+    file = models.ImageField(upload_to ='maps/')
 
     def __str__(self) -> str:
         return str(self.title)
