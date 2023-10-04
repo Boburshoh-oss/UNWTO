@@ -14,17 +14,17 @@ class Organization(TimeStampedModel, models.Model):
 
 class Forum(TimeStampedModel, models.Model):
     CHOICES =(
-    ("GA", "General Assambly"),
-    ("IF", "Investment Forum"),
-    ("EF", "Educational Forum"),
-)   
+        ("GA", "General Assambly"),
+        ("IF", "Investment Forum"),
+        ("EF", "Educational Forum"),
+    )
     title = models.CharField(max_length=255, blank=True, null=True)
     short_key=models.CharField(choices=CHOICES, default="GA",max_length=255,) 
     organization = models.ManyToManyField(Organization)
     description = models.TextField()
 
     def __str__(self):
-        return self.title
+        return str(self.title)
 
 
 class ForumProject(TimeStampedModel, models.Model):
@@ -36,7 +36,6 @@ class ForumProject(TimeStampedModel, models.Model):
 
     def __str__(self):
         return self.title
-
 
 class Event(TimeStampedModel, models.Model):
     day = models.CharField(max_length=255)
@@ -51,6 +50,30 @@ class EventTime(models.Model):
     end_time = models.TimeField()
     description = models.TextField()
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return self.description[:20]
+    
+class Map(TimeStampedModel, models.Model):
+    title = models.CharField(max_length=255, blank=True, null=True)
+    file = models.FileField(upload_to ='maps/')
+
+    def __str__(self) -> str:
+        return str(self.title)
+
+class MapEvent(TimeStampedModel, models.Model):
+    day = models.CharField(max_length=255)
+    date = models.DateField()
+    map = models.ForeignKey(Map, on_delete=models.CASCADE)
+    ordered = models.IntegerField(default=0)
+    def __str__(self) -> str:
+        return f"{self.day} {self.map.title}"
+
+class MapEventTime(models.Model):
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    description = models.TextField()
+    event = models.ForeignKey(MapEvent, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return self.description[:20]

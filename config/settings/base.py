@@ -75,10 +75,11 @@ MIDDLEWARE = [
 CSRF_TRUSTED_ORIGINS = [
     "http://0.0.0.0:8000/",
     "http://0.0.0.0:8000",
+    "https://localhost:80",
     "https://192.168.10.83",
     "https://api.unwtoga25.uz",
     "https://api.unwtoga25.uz/",
-    "https://musical-space-giggle-59qgxrpjg5xcp4wj-8000.app.github.dev"
+    "https://musical-space-giggle-59qgxrpjg5xcp4wj-80.app.github.dev/"
 ]  # ngrok temporary url
 CORS_ALLOW_ALL_ORIGINS = True
 # CORS ORIGIN
