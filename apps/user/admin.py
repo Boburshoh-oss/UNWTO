@@ -11,7 +11,8 @@ from django.urls import path
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.utils.translation import gettext_lazy as _
-
+import mimetypes  # Add this line here
+mimetypes.add_type('image/mpo', '.mpo')
 
 # Register your models here.
 class InivitationAdmin(ExportActionMixin, admin.ModelAdmin):
